@@ -1,0 +1,1 @@
+An early "brute force"-y method of giving each server their own manager that calls hack, grow, weaken scripts and telling each to run max threads based on RAM calculations on /themselves/ depending on the situation.
