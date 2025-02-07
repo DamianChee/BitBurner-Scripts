@@ -1,6 +1,8 @@
 # BitBurner-Scripts
 These are some of my own BitBurner scripts written and saved here in case I lose them. Or want to show them off.
 
+Everything's a little unorganized right now but the organisation is a W.I.P.
+
 Information about BitBurner can be found here: [BitBurner](https://github.com/bitburner-official/bitburner-src)
 
 BitBurner's README.md:
