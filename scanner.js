@@ -43,14 +43,12 @@ export async function main(ns) {
         if (temp.hasAdminRights && !temp.backdoorInstalled && !temp.hostname.startsWith("Atlas")) {
           ++backdoorRequiredServers.total;
           backdoorRequiredServers.info.push(temp);
-          ns.tprintf("Detected hacked server requiring backdoor: " + temp.hostname);
         }
 
         // If new server can be hacked but isn't
         if (temp.requiredHackingSkill <= ns.getHackingLevel() && !temp.hasAdminRights) {
           ++unhackedServers.total;
           unhackedServers.info.push(temp);
-          ns.tprintf("Detected unhacked server: " + temp.hostname);
         }
       }
     }
@@ -59,12 +57,16 @@ export async function main(ns) {
   if (unhackedServers.total) ns.tprintf("There is/are " + unhackedServers.total + " new servers to hack!");
   else ns.tprintf("There are no new servers for you to hack...");
 
-  if (!backdoorRequiredServers.total) ns.tprintf("There are " + backdoorRequiredServers.total + " servers in need of backdoors");
-  else ns.tprintf("There are no servers in need of backdoors");
+  if (!backdoorRequiredServers.total) {
+    ns.tprintf("There are " + backdoorRequiredServers.total + " servers in need of backdoors");
+    ns.tprintf("Unhacked server: " + backdoorRequiredServers.info);
+  } else {
+    ns.tprintf("There are no servers in need of backdoors");
+  }
 
   // Sort results according to required hacking skill
   allServers.info.sort((a, b) => a.requiredHackingSkill - b.requiredHackingSkill);
-  hackedServers.info.sort((a, b) => b.maxRam - a.maxRam);
+  hackedServers.info.sort((a, b) => b.hackRatio - a.hackRatio);
 
   ns.write("AllServers.json", JSON.stringify(allServers, null, "\t"), "w");
   ns.write("HackedServers.json", JSON.stringify(hackedServers, null, "\t"), "w");
