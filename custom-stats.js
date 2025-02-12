@@ -20,10 +20,10 @@ export async function main(ns) {
       // headers.push("ScrExp");
       // values.push(ns.formatNumber(ns.getTotalScriptExpGain().toPrecision(5), "$0.0a") + '/sec');
 
-      headers.push("ScrInc --- ");
+      headers.push(`ScrInc ---   `);
       values.push(ns.formatNumber(ns.getTotalScriptIncome()[0].toPrecision(5)) + '/s');
 
-      headers.push("ScrExp --- ");
+      headers.push(`ScrExp ---   `);
       values.push(ns.formatNumber(ns.getTotalScriptExpGain().toPrecision(5)) + '/s');
 
       hook0.innerText = headers.join(" \n");
