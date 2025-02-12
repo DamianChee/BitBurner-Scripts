@@ -18,7 +18,7 @@ export async function main(ns) {
   const hThreads = 1;
 
   while (true) {
-    const ramAvailable = ns.getServerMaxRam(thisServer) - ns.getServerUsedRam(thisServer) - 8; // reserving 16gb for myself
+    const ramAvailable = ns.getServerMaxRam(thisServer) - ns.getServerUsedRam(thisServer) - 8; // reserving 8gb for myself
     if (ramAvailable > 0) {
       const spacer = 5; // The number of milliseconds between each job finishing.
 
