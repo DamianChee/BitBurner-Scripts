@@ -19,14 +19,17 @@ export async function main(ns) {
   const maxMoney = ns.getServerMaxMoney(target);
 
   while (true) {
-    if (ns.getServerSecurityLevel(target) == minSec && ns.getServerMoneyAvailable(target) == maxMoney) {
+    const currentSecurity = ns.getServerSecurityLevel(target);
+    const currentMoney = ns.getServerMoneyAvailable(target);
+    if (currentSecurity == minSec && currentMoney == maxMoney) {
+      ns.tprint(`${thisServer} has prepped ${target}!`);
       ns.scriptKill("batcher/weaken.js", thisServer);
       ns.scriptKill("batcher/grow.js", thisServer);
-      ns.tprint(`${thisServer} has prepped ${target}!`)
       return;
     }
 
-    const ramAvailable = 32768 - ns.getServerUsedRam(thisServer) - 8; // reserving 32gb for myself
+    const ramAvailable = ns.getServerMaxRam(thisServer) - ns.getServerUsedRam(thisServer) - 8;
+
     if (ramAvailable > 0) {
       const spacer = 5; // The number of milliseconds between each job finishing.
 
@@ -34,8 +37,9 @@ export async function main(ns) {
       const gTime = ns.getGrowTime(target); // Time it takes to grow
 
       // Number of threads to use!
-      const weakSec = ns.weakenAnalyze(1, 5);
+      const weakSec = 0.05; // precalculated elsewhere this magic number seems always consistent
       const growSec = ns.growthAnalyzeSecurity(1, target, 5);
+
       const gThreads = Math.floor((weakSec / growSec) / 2)
 
       // HWGW spacing used to end them one after another
